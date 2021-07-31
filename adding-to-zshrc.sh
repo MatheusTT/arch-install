@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# plugins
-sudo pacman -S --noconfirm zsh-syntax-highlighting zsh-autosuggestions
-
 if ls -a $HOME | grep -q .p10k.zsh; then
+    # plugins
+    sudo pacman -S --noconfirm zsh-syntax-highlighting zsh-autosuggestions
     echo "
 
 ## For saving commands 
