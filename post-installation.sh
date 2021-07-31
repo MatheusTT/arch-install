@@ -2,7 +2,7 @@
 
 sudo pacman -Syu
 
-current_repo=pwd
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 ## AUR Helper
 git clone https://aur.archlinux.org/pikaur.git /tmp/pikaur
@@ -31,4 +31,4 @@ echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> $HOME/.zsh
 # first the fonts
 sudo pacman -S --noconfirm ttf-fira-{code,mono,sans}
 
-mv current_repo/config_files/kitty.conf $HOME/.config/kitty/kitty.conf
+mv $SCRIPT_DIR/config_files/kitty.conf $HOME/.config/kitty/kitty.conf
