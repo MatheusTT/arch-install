@@ -3,8 +3,9 @@
 # plugins
 sudo pacman -S --noconfirm zsh-syntax-highlighting zsh-autosuggestions
 
-if ls -a $HOME | grep .p10k.zsh; then
+if ls -a $HOME | grep -q .p10k.zsh; then
     echo "
+
 ## For saving commands 
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
