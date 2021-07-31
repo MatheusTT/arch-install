@@ -16,7 +16,7 @@ pikaur -S --noconfirm matcha-gtk-theme
 
 sudo pacman -S --noconfirm papirus-icon-theme
 
-sudo mv cz-Hickson-Black /usr/share/icons/
+sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
 
 ## Powerlevel10k and and pfetch
 pikaur -S --noconfirm pfetch
