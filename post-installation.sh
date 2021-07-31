@@ -2,9 +2,11 @@
 
 sudo pacman -Syu
 
+current_repo=pwd
+
 ## AUR Helper
 git clone https://aur.archlinux.org/pikaur.git /tmp/pikaur
-cd /tmp/pikaur && makepkg -sic
+cd /tmp/pikaur && makepkg -sic --noconfirm
 
 ## Themes, icons and the cursor
 git clone https://github.com/dracula/gtk.git /tmp/Dracula
@@ -29,4 +31,4 @@ echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> $HOME/.zsh
 # first the fonts
 sudo pacman -S --noconfirm ttf-fira-{code,mono,sans}
 
-mv ./config_files/kitty.conf $HOME/.config/kitty/kitty.conf
+mv current_repo/config_files/kitty.conf $HOME/.config/kitty/kitty.conf
