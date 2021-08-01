@@ -20,3 +20,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZLE_RPROMPT_INDENT=0
 pfetch" >> $HOME/.zshrc
 fi
+
+echo "
+
+Everything is done! "
