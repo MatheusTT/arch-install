@@ -11,19 +11,21 @@ cd /tmp/pikaur && makepkg -sic --noconfirm
 ## Themes, icons and the cursor
 git clone https://github.com/dracula/gtk.git /tmp/Dracula
 sudo mv /tmp/Dracula /usr/share/themes/
+gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
 
 pikaur -S --noconfirm matcha-gtk-theme
 
 sudo pacman -S --noconfirm papirus-icon-theme
+gsettings set org.gnome.desktop.interface icon-theme "Papirus"
 
 sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
-
+gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 ## Powerlevel10k and and pfetch
 pikaur -S --noconfirm pfetch
 
 pikaur -S --noconfirm nerd-fonts-meslo
 
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/.local/share/powerlevel10k
+git clone https://github.com/romkatv/powerlevel10k.git $HOME/.local/share/powerlevel10k
 echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> $HOME/.zshrc
 
 
@@ -34,4 +36,9 @@ sudo pacman -S --noconfirm ttf-fira-{code,mono,sans}
 mv $SCRIPT_DIR/config_files/kitty.conf $HOME/.config/kitty/kitty.conf
 
 ## pacman.conf
-mv $SCRIPT_DIR/config_files/pacman.conf /etc/pacman.conf
+sudo mv $SCRIPT_DIR/config_files/pacman.conf /etc/pacman.conf
+sudo pacman -Sy
+
+echo "
+
+Everything is done! "
