@@ -32,3 +32,6 @@ echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> $HOME/.zsh
 sudo pacman -S --noconfirm ttf-fira-{code,mono,sans}
 
 mv $SCRIPT_DIR/config_files/kitty.conf $HOME/.config/kitty/kitty.conf
+
+## pacman.conf
+mv $SCRIPT_DIR/config_files/pacman.conf /etc/pacman.conf
