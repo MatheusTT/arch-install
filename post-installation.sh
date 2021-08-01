@@ -1,12 +1,13 @@
 #!/bin/bash
 
-sudo pacman -Syu
-
+# Directory where the script is
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+
 ## AUR Helper
-git clone https://aur.archlinux.org/pikaur.git /tmp/pikaur
-cd /tmp/pikaur && makepkg -sic --noconfirm
+cd /tmp && git clone https://aur.archlinux.org/pikaur.git
+cd pikaur && makepkg -sic --noconfirm
+
 
 ## Themes, icons and the cursor
 git clone https://github.com/dracula/gtk.git /tmp/Dracula
@@ -20,6 +21,8 @@ gsettings set org.gnome.desktop.interface icon-theme "Papirus"
 
 sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
 gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
+
+
 ## Powerlevel10k and and pfetch
 pikaur -S --noconfirm pfetch
 
