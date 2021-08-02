@@ -5,12 +5,12 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 
 ## AUR Helper
-cd /tmp && git clone https://aur.archlinux.org/pikaur.git
+cd /tmp && git clone --depth=1 https://aur.archlinux.org/pikaur.git
 cd pikaur && makepkg -sic --noconfirm
 
 
 ## Themes, icons and the cursor
-git clone https://github.com/dracula/gtk.git /tmp/Dracula
+git clone --depth=1 https://github.com/dracula/gtk.git /tmp/Dracula
 sudo mv /tmp/Dracula /usr/share/themes/
 gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
 
@@ -26,22 +26,22 @@ gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 ## Powerlevel10k and and pfetch
 pikaur -S --noconfirm pfetch
 
-pikaur -S --noconfirm nerd-fonts-meslo
+pikaur -S --noconfirm nerd-fonts-meslo &&
 
-git clone https://github.com/romkatv/powerlevel10k.git /home/$USER/.local/share/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$USER/.local/share/powerlevel10k &&
 echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> /home/$USER/.zshrc
 
 
 ## Kitty conf
 # first the fonts
-sudo pacman -S --noconfirm ttf-fira-{code,mono,sans}
+sudo pacman -S --noconfirm ttf-fira-{code,mono,sans} &&
 mv $SCRIPT_DIR/config_files/kitty.conf /home/$USER/.config/kitty/kitty.conf
 
 ## .vimrc
 mv $SCRIPT_DIR/config_files/.vimrc /home/$USER
 
 ## pacman.conf
-sudo mv $SCRIPT_DIR/config_files/pacman.conf /etc/pacman.conf
+sudo mv $SCRIPT_DIR/config_files/pacman.conf /etc/pacman.conf &&
 sudo pacman -Sy
 
 echo "
