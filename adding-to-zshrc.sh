@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ls -a $HOME | grep -q .p10k.zsh; then
+if ls -a /home/$USER | grep -q .p10k.zsh; then
     # plugins
     sudo pacman -S --noconfirm zsh-syntax-highlighting zsh-autosuggestions
     echo "
@@ -18,7 +18,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 ## My own commands
 ZLE_RPROMPT_INDENT=0
-pfetch" >> $HOME/.zshrc
+pfetch" >> /home/$USER/.zshrc
 fi
 
 echo "

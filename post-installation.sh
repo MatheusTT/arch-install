@@ -28,17 +28,17 @@ pikaur -S --noconfirm pfetch
 
 pikaur -S --noconfirm nerd-fonts-meslo
 
-git clone https://github.com/romkatv/powerlevel10k.git $HOME/.local/share/powerlevel10k
-echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> $HOME/.zshrc
+git clone https://github.com/romkatv/powerlevel10k.git /home/$USER/.local/share/powerlevel10k
+echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> /home/$USER/.zshrc
 
 
 ## Kitty conf
 # first the fonts
 sudo pacman -S --noconfirm ttf-fira-{code,mono,sans}
-mv $SCRIPT_DIR/config_files/kitty.conf $HOME/.config/kitty/kitty.conf
+mv $SCRIPT_DIR/config_files/kitty.conf /home/$USER/.config/kitty/kitty.conf
 
 ## .vimrc
-mv $SCRIPT_DIR/config_files/.vimrc $HOME/
+mv $SCRIPT_DIR/config_files/.vimrc /home/$USER
 
 ## pacman.conf
 sudo mv $SCRIPT_DIR/config_files/pacman.conf /etc/pacman.conf
