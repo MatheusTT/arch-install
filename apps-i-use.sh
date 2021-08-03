@@ -2,7 +2,7 @@
 
 PACKAGES=(
 	discord
-	steam
+	steam-native-runtime
 	wine
 	qbittorrent
 )
