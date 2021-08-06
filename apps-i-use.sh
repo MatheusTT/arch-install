@@ -9,17 +9,17 @@ PACKAGES=(
 
 AUR_PACKAGES=(
 	google-chrome
-	pop-shell-shortcuts-git
-	gnome-shell-extension-pop-shell-git
 	pfetch
 	timeshift
 	visual-studio-code-bin
+	pop-shell-shortcuts-git
+	gnome-shell-extension-pop-shell-git
+
 )
 FLATPAKS=(
 	org.telegram.desktop
 	org.gimp.GIMP
 	org.kde.kdenlive
-	org.gnome.gitlab.somas.Apostrophe
 )
 
 ## Arch
@@ -75,5 +75,6 @@ if flatpak list | grep -q org.gnome.GIMP; then
 	mv .local/share/applicativos/org.gimp.GIMP.desktop /home/$USER/.local/share/applications/org.gimp.GIMP.desktop
 	cd ..
 	rm -rf PhotoGIMP\ by\ Diolinux\ v2020\ for\ Flatpak
+	echo -e "\033[1;31mThe GIMP icon will change to PhotoGIMP after you restart.\033[0m"
 fi
 
