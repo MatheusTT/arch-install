@@ -12,4 +12,4 @@ set cmdheight=1
 set wildmenu
 
 map <C-q> :quit<CR>
-map <C-s> :write<CR>
+map <C-w> :write<CR>
