@@ -16,17 +16,21 @@ echo "
 127.0.1.1	arch.localdomain  arch" >> /etc/hosts
 
 
-passwd root
+#echo -e "\n\033[1;32mPassword for root:\033[0m"
+#passwd root
+
 useradd -mg users -G wheel -c Matheus -s /usr/bin/zsh broa
+echo -e "\n\033[1;32mPassword for broa:\033[0m"
 passwd broa
 
 sed -i "82s/./ /" /etc/sudoers
 
-pacman -S grub efibootmgr dosfstools os-prober mtools networkmanager bluez tlp reflector xdg-{utils,user-dirs} pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland
+
+pacman -S grub efibootmgr dosfstools os-prober mtools networkmanager bluez tlp reflector xdg-{utils,user-dirs} pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland ttf-fira-{code,mono,sans}
 
 pacman -S nvidia nvidia-{utils,settings,prime} mesa xf86-video-intel xf86-input-libinput
 
-grub-install --target=x86_64-efi --efi-directory=/boot/efi -bootloader-id=Arch --recheck &&
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=Arch --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable NetworkManager
