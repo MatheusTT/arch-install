@@ -26,7 +26,8 @@ passwd broa
 sed -i "82s/./ /" /etc/sudoers
 
 
-pacman -S grub efibootmgr dosfstools os-prober mtools networkmanager bluez tlp reflector xdg-{utils,user-dirs} pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland ttf-fira-{code,mono,sans}
+pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager bluez tlp reflector 
+pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland 
 
 #pacman -S nvidia nvidia-{utils,settings,prime} mesa xf86-video-intel xf86-input-libinput
 
