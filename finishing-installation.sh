@@ -3,8 +3,8 @@
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc --utc
 
-LINE=$(grep -n "pt_BR.UTF-8 UTF-8" /etc/locale.gen | cut -d : -f 1)
-sed -i '$LINE s/.//' /etc/locale.gen
+LANG="pt_BR.UTF-8 UTF-8"
+sed -i "s/#$LANG/ $LANG/" /etc/locale.gen
 locale-gen
 
 echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
