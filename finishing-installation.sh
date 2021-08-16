@@ -27,12 +27,14 @@ sed -i "82s/./ /" /etc/sudoers
 
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, reflector, etc.\033[0m"
-pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager reflector tlp
+pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager xdg-{utils,user-dirs} reflector tlp
 
 echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
 pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland 
 
 #pacman -S nvidia nvidia-{utils,settings,prime} xf86-video-intel xf86-input-libinput
+
+LC_ALL=C xdg-user-dirs-update --force
 
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
 sed -i "52s/ autodetect/ autodetect keyboard keymap/" /etc/mkinitcpio.conf
