@@ -1,6 +1,7 @@
 #!/bin/bash
 
 PACKAGES=(
+	file-roller
 	discord
 	steam-native-runtime
 	wine
@@ -8,13 +9,13 @@ PACKAGES=(
 )
 
 AUR_PACKAGES=(
-	google-chrome
+	brave-bin
 	pfetch
 	timeshift
 	visual-studio-code-bin
 	pop-shell-shortcuts-git
 	gnome-shell-extension-pop-shell-git
-
+	system76-power
 )
 FLATPAKS=(
 	org.telegram.desktop
