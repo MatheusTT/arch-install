@@ -5,16 +5,13 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 
 ## AUR Helper
-cd /tmp && git clone --depth=1 https://aur.archlinux.org/pikaur.git
-cd pikaur && makepkg -sic --noconfirm
+cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru-bin.git 
+cd paru-bin && makepkg -sic --noconfirm
 
 
 ## Themes, icons and the cursor
-git clone --depth=1 https://github.com/dracula/gtk.git /tmp/Dracula
-sudo mv /tmp/Dracula /usr/share/themes/
-gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
-
-pikaur -S --noconfirm matcha-gtk-theme
+paru -S --noconfirm matcha-gtk-theme
+gsettings set org.gnome.desktop.interface gtk-theme "Matcha-dark-azul"
 
 sudo pacman -S --noconfirm papirus-icon-theme
 gsettings set org.gnome.desktop.interface icon-theme "Papirus"
@@ -24,9 +21,9 @@ gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 
 
 ## Powerlevel10k and and pfetch
-pikaur -S --noconfirm pfetch
+paru -S --noconfirm pfetch
 
-pikaur -S --noconfirm nerd-fonts-meslo &&
+paru -S --noconfirm nerd-fonts-meslo &&
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$USER/.local/share/powerlevel10k &&
 echo 'source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme' >> /home/$USER/.zshrc
@@ -48,4 +45,4 @@ sudo pacman -Sy
 
 echo "
 
-Everything is done! "
+Everything is done!"
