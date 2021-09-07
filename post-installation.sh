@@ -22,6 +22,10 @@ gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
 
+# keyboard layout
+
+gsettings set org.gnome.desktop.input-sources sources "[('xkb','br')]"
+
 # fonts
 
 for font in ttf-fira-{code,mono,sans}; do
