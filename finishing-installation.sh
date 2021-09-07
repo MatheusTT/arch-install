@@ -5,15 +5,20 @@ hwclock --systohc --utc
 
 LANG="pt_BR.UTF-8 UTF-8"
 sed -i "s/#$LANG/$LANG/" /etc/locale.gen
+
+LANG2="en_US.UTF-8 UTF-8"
+sed -i "s/#$LANG2/$LANG2/" /etc/locale.gen
+
 locale-gen
 
 echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
-echo "arch" >> /etc/hostname
+HOSTNAME="arch"
+echo "$HOSTNAME" >> /etc/hostname
 echo "
 127.0.0.1	localhost
 ::1		localhost
-127.0.1.1	arch.localdomain  arch" >> /etc/hosts
+127.0.1.1	$HOSTNAME.localdomain  $HOSTNAME" >> /etc/hosts
 
 
 #echo -e "\n\033[1;32mPassword for root\033[0m"
@@ -32,7 +37,7 @@ pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager xdg-{utils
 echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
 pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland 
 
-#pacman -S nvidia nvidia-{utils,settings,prime} xf86-video-intel xf86-input-libinput
+#pacman -S nvidia nvidia-{utils,settings,prime} mesa xf86-video-intel xf86-input-libinput
 
 LC_ALL=C xdg-user-dirs-update --force
 
