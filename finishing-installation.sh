@@ -35,7 +35,7 @@ echo -e "\n\033[1;32mInstalling grub, networkmanager, reflector, etc.\033[0m"
 pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager xdg-{utils,user-dirs} reflector tlp
 
 echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
-pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} wayland xorg-xwayland 
+pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} xorg-{server,xwayland,xrandr,xinput,xkill} 
 
 #pacman -S nvidia nvidia-{utils,settings,prime} mesa xf86-video-intel xf86-input-libinput
 
