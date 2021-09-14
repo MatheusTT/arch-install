@@ -67,7 +67,8 @@ echo "source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme" >> /home/$USE
 if ! pacman -Qs | grep -q ttf-fira-code; then
 	sudo pacman -S --noconfirm ttf-fira-code
 fi
-mv $SCRIPT_DIR/config_files/my-kitty.conf /home/$USER/.config/kitty/
+mv /home/$USER/.config/kitty/kitty.conf /home/$USER/.config/kitty/kitty/default-kitty.conf
+mv $SCRIPT_DIR/config_files/my-kitty.conf /home/$USER/.config/kitty/kitty.conf
 
 ## .vimrc
 mv $SCRIPT_DIR/config_files/.vimrc /home/$USER
