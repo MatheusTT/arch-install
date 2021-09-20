@@ -19,8 +19,9 @@ gsettings set org.gnome.desktop.interface icon-theme "Papirus"
 sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
 gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 
-
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
+
+gsettings set org.gnome.desktop.session idle-delay 0
 
 # keyboard layout
 
@@ -67,16 +68,17 @@ echo "source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme" >> /home/$USE
 if ! pacman -Qs | grep -q ttf-fira-code; then
 	sudo pacman -S --noconfirm ttf-fira-code
 fi
-mv /home/$USER/.config/kitty/kitty.conf /home/$USER/.config/kitty/kitty/default-kitty.conf
-mv $SCRIPT_DIR/config_files/my-kitty.conf /home/$USER/.config/kitty/kitty.conf
-
+if [ -f /home/$USER/.config/kitty/kitty.conf ]; then
+    sudo mv /home/$USER/.config/kitty/kitty.conf /home/$USER/.config/kitty/default-kitty.conf
+    sudo mv $SCRIPT_DIR/config_files/my-kitty.conf /home/$USER/.config/kitty/kitty.conf
+else
+    sudo mv $SCRIPT_DIR/config_files/my-kitty.conf /home/$USER/.config/kitty/kitty.conf
+fi
 ## .vimrc
-mv $SCRIPT_DIR/config_files/.vimrc /home/$USER
+sudo mv $SCRIPT_DIR/config_files/.vimrc /home/$USER/
 
 ## pacman.conf
-sed -i "33s/.//"        /etc/pacman.conf
-sed -i "38i\ILoveCandy" /etc/pacman.conf
-sed -i "94,95s/.//"     /etc/pacman.conf
+sudo sed -i "33s/.//;94,95s/.//;38i\ILoveCandy"
 
 echo "
 
