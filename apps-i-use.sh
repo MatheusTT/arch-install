@@ -65,17 +65,15 @@ done
 
 ## PhotoGIMP
 
-if flatpak list | grep -q org.gnome.GIMP; then
+if flatpak list | grep -q org.gimp.GIMP; then
 	cd /home/$USER/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
+    unzip PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
 
-	unzip PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
-	cd PhotoGIMP\ by\ Diolinux\ v2020\ for\ Flatpak
-
-	mv .icons /home/$USER
-	mv .var /home/$USER
+    cd 'PhotoGIMP by Diolinux v2020 for Flatpak'
+	mv .icons /home/$USER/
+	mv .var /home/$USER/
 	mv .local/share/applicativos/org.gimp.GIMP.desktop /home/$USER/.local/share/applications/org.gimp.GIMP.desktop
-	cd ..
-	rm -rf PhotoGIMP\ by\ Diolinux\ v2020\ for\ Flatpak
-	echo -e "\033[1;31mThe GIMP icon will change to PhotoGIMP after you restart.\033[0m"
-fi
 
+    cd .. && rm -rf 'PhotoGIMP by Diolinux v2020 for Flatpak'
+    echo -e "\033[1;31mThe GIMP icon will change to PhotoGIMP after you restart.\033[0m"
+fi
