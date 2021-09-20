@@ -6,19 +6,23 @@ PACKAGES=(
 	steam-native-runtime
 	wine
 	qbittorrent
+    telegram-desktop
+    bashtop
+    powerline-vim
+    powerline-fonts
+    power-profiles-daemon
 )
 
 AUR_PACKAGES=(
-	brave-bin
+	google-chrome
 	pfetch
 	timeshift
 	visual-studio-code-bin
 	pop-shell-shortcuts-git
 	gnome-shell-extension-pop-shell-git
-	system76-power
+    ideapad-cm
 )
 FLATPAKS=(
-	org.telegram.desktop
 	org.gimp.GIMP
 	org.kde.kdenlive
 )
