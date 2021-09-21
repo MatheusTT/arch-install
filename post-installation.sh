@@ -9,33 +9,32 @@ cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru-bin.git
 cd paru-bin && makepkg -sic --noconfirm
 
 
-## Themes, icons, the cursor theme and general gsettings configurations
-paru -S --noconfirm matcha-gtk-theme
-gsettings set org.gnome.desktop.interface gtk-theme "Matcha-dark-azul"
-
-sudo pacman -S --noconfirm papirus-icon-theme
-gsettings set org.gnome.desktop.interface icon-theme "Papirus"
+## GTK Theme, icons, and the cursor theme
+paru -S --noconfirm matcha-gtk-theme papirus-icon-theme
 
 sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
-gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 
-gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.interface gtk-theme     "Matcha-dark-azul"
+gsettings set org.gnome.desktop.interface icon-theme    "Papirus"
+gsettings set org.gnome.desktop.interface cursor-theme  "cz-Hickson-Black"
+
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme    "Papirus"
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface cursor-theme  "cz-Hickson-Black"
+
 
 gsettings set org.gnome.desktop.session idle-delay 0
 
+## Mouse/touchpad settings
+gsettings set org.gnome.desktop.peripherals.mouse accel-profile   "flat"
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click  true
 
-sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
-sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface cursor-theme 'cz-Hickson-Black'
-sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click  true
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.mouse accel-profile   "flat"
 
-# keyboard layout
-
+## Keyboard layout
 gsettings set org.gnome.desktop.input-sources sources "[('xkb','br')]"
 
-# fonts
-
+## Fonts
 for font in ttf-fira-{code,mono,sans}; do
 	if ! pacman -Qs | grep -q $font; then
 		sudo pacman -S --noconfirm "$font"
@@ -47,14 +46,11 @@ gsettings set org.gnome.desktop.interface document-font-name  'Fira Sans 11'
 gsettings set org.gnome.desktop.interface monospace-font-name 'Fira Code Medium 11'
 gsettings set org.gnome.desktop.wm.preferences titlebar-font  'Fira Sans Bold 12'
 
-# night-light
-
+## Night-light
 gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled       true
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 0
 gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to   0
 gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature   3150
-
-# night-light for gdm
 
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled       true
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-from 0
@@ -63,7 +59,6 @@ sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color ni
 
 ## Powerlevel10k and and pfetch
 paru -S --noconfirm pfetch
-
 paru -S --noconfirm nerd-fonts-meslo &&
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$USER/.local/share/powerlevel10k &&
