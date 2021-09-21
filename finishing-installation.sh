@@ -37,9 +37,10 @@ pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager xdg-{utils
 echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
 pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} xorg-{server,xwayland,xrandr,xinput,xkill} 
 
-#pacman -S nvidia nvidia-{utils,settings} mesa xf86-input-libinput
+#pacman -S nvidia nvidia-{utils,settings}
 
-LC_ALL=C xdg-user-dirs-update --force
+#LC_ALL=C xdg-user-dirs-update --force
+echo "C" > /home/$USER/.config/user-dirs.locale
 
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
 sed -i "52s/ autodetect/ autodetect keyboard keymap/" /etc/mkinitcpio.conf
