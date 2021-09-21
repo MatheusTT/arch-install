@@ -1,25 +1,27 @@
 #!/bin/bash
 
 PACKAGES=(
-	file-roller
-	discord
-	steam-native-runtime
-	wine
-	qbittorrent
+    file-roller
+    discord
+    steam-native-runtime
+    wine
+    qbittorrent
     telegram-desktop
     bashtop
+    neofetch
     powerline-vim
     powerline-fonts
     power-profiles-daemon
 )
 
 AUR_PACKAGES=(
-	google-chrome
-	pfetch
-	timeshift
-	visual-studio-code-bin
-	pop-shell-shortcuts-git
-	gnome-shell-extension-pop-shell-git
+    google-chrome
+    chrome-gnome-shell-git
+    pfetch
+    timeshift
+    visual-studio-code-bin
+    pop-shell-shortcuts-git
+    gnome-shell-extension-pop-shell-git
     ideapad-cm
 )
 FLATPAKS=(
@@ -38,9 +40,9 @@ for package in ${PACKAGES[@]}; do
 	fi
 done
 
-if ! pacman -Qm | grep -q pikaur; then
-	cd /tmp && git clone --depth=1 https://aur.archlinux.org/pikaur.git
-	cd pikaur && makepkg -sic --noconfirm
+if ! pacman -Qm | grep -q paru-bin; then
+	cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru-bin.git
+	cd paru-bin && makepkg -sic --noconfirm
 fi
 
 ## AUR
@@ -48,7 +50,7 @@ echo -e "\n\033[1;34mAUR Packages:\033[0m"
 
 for aur_pkg in ${AUR_PACKAGES[@]}; do
 	if ! pacman -Qm | grep -q $aur_pkg; then
-		pikaur -S --noconfirm "$aur_pkg"
+		paru -S --noconfirm "$aur_pkg"
 	else
 		echo -e "\033[0;32m[$aur_pkg]\033[0m - already installed"
 	fi
