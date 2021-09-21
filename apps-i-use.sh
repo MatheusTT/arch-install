@@ -2,6 +2,10 @@
 
 PACKAGES=(
     file-roller
+    eog
+    vlc
+    gnome-{calculator,weather,passwordsafe}
+    flatpak
     discord
     steam-native-runtime
     wine
