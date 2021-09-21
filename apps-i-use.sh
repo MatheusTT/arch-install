@@ -88,3 +88,14 @@ if flatpak list | grep -q org.gimp.GIMP; then
     cd .. && rm -rf 'PhotoGIMP by Diolinux v2020 for Flatpak'
     echo -e "\033[1;31mThe GIMP icon will change to PhotoGIMP after you restart.\033[0m"
 fi
+
+## Emojis
+
+sudo pacman -S noto-fonts-emoji
+mkdir /home/$USER/.config/fontconfig
+
+echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n
+<!-- ## serif ## -->\n  <alias>\n               <family>serif</family>\n                <prefer>\n                      <family>Noto Serif</family>\n                     <family>emoji</family>\n                        <family>Liberation Serif</family>\n
+        <family>Nimbus Roman</family>\n                 <family>DejaVu Serif</family>\n         </prefer>\n     </alias>\n      <!-- ## sans-serif ## -->\n       <alias>\n               <family>sans-serif</family>\n           <prefer>\n                      <family>Noto Sans</family>\n                      <family>emoji</family>\n                        <family>Liberation Sans</family>\n                        <family>Nimbus Sans</family>\n                  <family>DejaVu Sans</family>\n          </prefer>\n     </alias>\n</fontconfig>' > /home/$USER/.config/fontconfig/fonts.conf
+
+sudo fc-cache -f
