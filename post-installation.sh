@@ -20,8 +20,15 @@ sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
 gsettings set org.gnome.desktop.interface cursor-theme "cz-Hickson-Black"
 
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
 gsettings set org.gnome.desktop.session idle-delay 0
+
+
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme 'Papirus'
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface cursor-theme 'cz-Hickson-Black'
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.mouse accel-profile 'flat'
 
 # keyboard layout
 
