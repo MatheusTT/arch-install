@@ -21,15 +21,12 @@ gsettings set org.gnome.desktop.interface cursor-theme  "cz-Hickson-Black"
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface icon-theme    "Papirus"
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.interface cursor-theme  "cz-Hickson-Black"
 
-
-gsettings set org.gnome.desktop.session idle-delay 0
-
 ## Mouse/touchpad settings
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile   "flat"
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click  true
 
-sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click  true
 sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.mouse accel-profile   "flat"
+sudo -u gdm dbus-launch gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click  true
 
 ## Keyboard layout
 gsettings set org.gnome.desktop.input-sources sources "[('xkb','br')]"
@@ -57,13 +54,20 @@ sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color ni
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-schedule-to   0
 sudo -u gdm dbus-launch gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature   3150
 
+## Other gsettings
+gsettings set org.gnome.desktop.session idle-delay 0
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1800
+
+gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
+gsettings set org.gnome.desktop.interface enable-hot-corners true
+gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+
 ## Powerlevel10k and and pfetch
 paru -S --noconfirm pfetch
 paru -S --noconfirm nerd-fonts-meslo &&
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /home/$USER/.local/share/powerlevel10k &&
 echo "source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme" >> /home/$USER/.zshrc
-
 
 ## Kitty conf
 # first the fonts
