@@ -22,6 +22,7 @@ AUR_PACKAGES=(
     visual-studio-code-bin
     pop-shell-shortcuts-git
     gnome-shell-extension-pop-shell-git
+    gnome-shell-extension-dash-to-dock-gnome40-git
     ideapad-cm
 )
 FLATPAKS=(
