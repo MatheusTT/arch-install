@@ -3,6 +3,9 @@
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc --utc
 
+reflector -c Brazil -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+pacman -Syy
+
 LANG="pt_BR.UTF-8 UTF-8"
 sed -i "s/#$LANG/$LANG/" /etc/locale.gen
 
@@ -16,9 +19,9 @@ echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
 HOSTNAME="arch"
 echo "$HOSTNAME" >> /etc/hostname
 echo "
-127.0.0.1	localhost
-::1		localhost
-127.0.1.1	$HOSTNAME.localdomain  $HOSTNAME" >> /etc/hosts
+127.0.0.1   localhost
+::1         localhost
+127.0.1.1   $HOSTNAME.localdomain  $HOSTNAME" >> /etc/hosts
 
 
 #echo -e "\n\033[1;32mPassword for root\033[0m"
@@ -32,7 +35,8 @@ sed -i "82s/./ /" /etc/sudoers
 
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, reflector, etc.\033[0m"
-pacman -Sy grub efibootmgr dosfstools os-prober mtools networkmanager xdg-{utils,user-dirs} reflector tlp
+# You can add "os-prober" here, if you have more than one OS.
+pacman -S grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} ntfs-3g rsync reflector tlp
 
 echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
 pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} xorg-{server,xwayland,xrandr,xinput,xkill} 
