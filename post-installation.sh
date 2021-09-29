@@ -84,7 +84,7 @@ fi
 sudo mv $SCRIPT_DIR/config_files/.vimrc /home/$USER/
 
 ## pacman.conf
-sudo sed -i "33s/.//;94,95s/.//;38i\ILoveCandy"
+sudo sed -i "33s/.//;94,95s/.//;38i\ILoveCandy" /etc/pacman.conf
 
 echo "
 
