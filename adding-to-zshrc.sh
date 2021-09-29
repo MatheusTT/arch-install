@@ -2,7 +2,7 @@
 
 if ls -a /home/$USER | grep -q .p10k.zsh; then
     # plugins
-    sudo pacman -S --noconfirm zsh-syntax-highlighting zsh-autosuggestions
+    sudo pacman -Syy --noconfirm zsh-syntax-highlighting zsh-autosuggestions
     echo "
 
 ## For saving commands 
@@ -19,8 +19,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ## My own commands
 ZLE_RPROMPT_INDENT=0
 pfetch" >> /home/$USER/.zshrc
-fi
-
-echo "
+    echo "
 
 Everything is done! "
+fi
