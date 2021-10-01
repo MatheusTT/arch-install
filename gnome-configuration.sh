@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(whoami)" == "root" ]; then
+    echo "Script must be run as a normal user"
+    exit
+fi
+
 gsettings set org.gnome.desktop.interface gtk-theme     "Matcha-dark-azul"
 gsettings set org.gnome.desktop.interface icon-theme    "Papirus"
 gsettings set org.gnome.desktop.interface cursor-theme  "cz-Hickson-Black"

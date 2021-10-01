@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(whoami)" == "root" ]; then
+    echo "Script must be run as a normal user"
+    exit
+fi
+
 PACKAGES=(
     file-roller
     eog
@@ -80,13 +85,13 @@ done
 ## PhotoGIMP
 
 if flatpak list | grep -q org.gimp.GIMP; then
-	cd /home/$USER/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
+	cd ~/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
     unzip PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
 
     cd 'PhotoGIMP by Diolinux v2020 for Flatpak/'
-	mv .icons/* /home/$USER/.icons
-	mv .var/* /home/$USER/.var
-	mv .local/share/applications/org.gimp.GIMP.desktop /home/$USER/.local/share/applications
+	mv .icons/* ~/.icons
+	mv .var/* ~/.var
+	mv .local/share/applications/org.gimp.GIMP.desktop ~/.local/share/applications
 
     # This is because rofi doesn't show the Photogimp icon in ~/.icons,
     # but can show the icon that Papirus have.
@@ -101,7 +106,7 @@ fi
 ## Emojis
 
 sudo pacman -S noto-fonts-emoji
-mkdir /home/$USER/.config/fontconfig
+mkdir ~/.config/fontconfig
 
 echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n
 <!-- ## serif ## -->\n  <alias>\n               <family>serif</family>\n                <prefer>\n                      <family>Noto Serif</family>\n                     <family>emoji</family>\n                        <family>Liberation Serif</family>\n
