@@ -46,3 +46,6 @@ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 
 gsettings set org.gnome.desktop.wm.preferences button-layout "appmenu:minimize,maximize,close"
 gsettings set org.gnome.desktop.interface enable-hot-corners "true"
 gsettings set org.gtk.Settings.FileChooser sort-directories-first "true"
+
+# Color settings
+colormgr device-set-enabled $(colormgr get-devices | grep Path | cut -f 2 -d ':'| sed "s/ //g") False
