@@ -39,9 +39,9 @@ echo -e "\n\033[1;32mInstalling grub, networkmanager, reflector, etc.\033[0m"
 pacman -S grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} ntfs-3g rsync reflector tlp
 
 echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
-pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} xorg-{server,xwayland,xrandr,xinput,xkill} 
+pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} xorg-{server,xwayland,xrandr,xinput,setxkbmap,xrdb,xkill} 
 
-#pacman -S nvidia nvidia-{utils,settings}
+#pacman -S nvidia nvidia-{utils,settings} lib32-nvidia-utils
 
 #LC_ALL=C xdg-user-dirs-update --force
 echo "C" > /home/$USER/.config/user-dirs.locale

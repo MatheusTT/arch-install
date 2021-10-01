@@ -16,6 +16,7 @@ PACKAGES=(
     powerline-vim
     powerline-fonts
     power-profiles-daemon
+    ttf-font-awesome
 )
 
 AUR_PACKAGES=(
@@ -28,6 +29,8 @@ AUR_PACKAGES=(
     gnome-shell-extension-pop-shell-git
     gnome-shell-extension-dash-to-dock-gnome40-git
     ideapad-cm
+    lib32-mangohud
+    mangohud
 )
 FLATPAKS=(
 	org.gimp.GIMP
