@@ -21,9 +21,9 @@ sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
 
 ## Fonts
 for font in ttf-fira-{code,mono,sans}; do
-	if ! pacman -Qs | grep -q $font; then
-		sudo pacman -S --noconfirm "$font"
-	fi
+    if ! pacman -Qs | grep -q $font; then
+        sudo pacman -S --noconfirm "$font"
+    fi
 done
 
 ## Gnome configuration
@@ -39,7 +39,7 @@ echo "source ~/.local/share/powerlevel10k/powerlevel10k.zsh-theme" >> ~/.zshrc
 ## Kitty conf
 # first the fonts
 if ! pacman -Qs | grep -q ttf-fira-code; then
-	sudo pacman -S --noconfirm ttf-fira-code
+    sudo pacman -S --noconfirm ttf-fira-code
 fi
 if [ -f ~/.config/kitty/kitty.conf ]; then
     sudo mv ~/.config/kitty/kitty.conf ~/.config/kitty/default-kitty.conf
