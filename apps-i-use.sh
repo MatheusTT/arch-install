@@ -17,6 +17,7 @@ PACKAGES=(
     qbittorrent
     telegram-desktop
     bashtop
+    ranger
     neofetch
     powerline-vim
     powerline-fonts
@@ -123,3 +124,17 @@ echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE fontconfig SYSTEM "fo
         <family>Nimbus Roman</family>\n                 <family>DejaVu Serif</family>\n         </prefer>\n     </alias>\n      <!-- ## sans-serif ## -->\n       <alias>\n               <family>sans-serif</family>\n           <prefer>\n                      <family>Noto Sans</family>\n                      <family>emoji</family>\n                        <family>Liberation Sans</family>\n                        <family>Nimbus Sans</family>\n                  <family>DejaVu Sans</family>\n          </prefer>\n     </alias>\n</fontconfig>' > /home/$USER/.config/fontconfig/fonts.conf
 
 sudo fc-cache -f
+
+## Ranger image preview
+
+if ! pacman -Qs | grep -q python-pillow; then
+    sudo pacman -S --noconfirm python-pillow
+fi
+if [ ! -d ~/.config/ranger ]; then
+    mkdir ~/.config/ranger
+    echo "set preview_images true
+set preview_images_method kitty" >> ~/.config/ranger/rc.conf
+else
+    echo "set preview_images true
+set preview_images_method kitty" >> ~/.config/ranger/rc.conf
+fi
