@@ -38,35 +38,35 @@ AUR_PACKAGES=(
     mangohud
 )
 FLATPAKS=(
-	org.gimp.GIMP
-	org.kde.kdenlive
+    org.gimp.GIMP
+    org.kde.kdenlive
 )
 
 ## Arch
 echo -e "\033[1;34mArch Packages:\033[0m"
 
 for package in ${PACKAGES[@]}; do
-	if ! pacman -Qs | grep -q $package; then
-		sudo pacman -S --noconfirm "$package"
-	else
-		echo -e "\033[0;32m[$package]\033[0m - already installed"
-	fi
+    if ! pacman -Qs | grep -q $package; then
+        sudo pacman -S --noconfirm "$package"
+    else
+        echo -e "\033[0;32m[$package]\033[0m - already installed"
+    fi
 done
 
 if ! pacman -Qm | grep -q paru-bin; then
-	cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru-bin.git
-	cd paru-bin && makepkg -sic --noconfirm
+    cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru-bin.git
+    cd paru-bin && makepkg -sic --noconfirm
 fi
 
 ## AUR
 echo -e "\n\033[1;34mAUR Packages:\033[0m"
 
 for aur_pkg in ${AUR_PACKAGES[@]}; do
-	if ! pacman -Qm | grep -q $aur_pkg; then
-		paru -S --noconfirm "$aur_pkg"
-	else
-		echo -e "\033[0;32m[$aur_pkg]\033[0m - already installed"
-	fi
+    if ! pacman -Qm | grep -q $aur_pkg; then
+        paru -S --noconfirm "$aur_pkg"
+    else
+        echo -e "\033[0;32m[$aur_pkg]\033[0m - already installed"
+    fi
 done
 
 ## Flatpak
@@ -75,23 +75,33 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
 
 for flatpak_pkg in ${FLATPAKS[@]}; do
-	if ! flatpak list | grep -q $flatpak_pkg; then
-		flatpak install -y "$flatpak_pkg"
-	else
-		echo -e "\033[0;32m[$flatpak_pkg]\033[0m - already installed"
-	fi
+    if ! flatpak list | grep -q $flatpak_pkg; then
+        flatpak install -y "$flatpak_pkg"
+    else
+        echo -e "\033[0;32m[$flatpak_pkg]\033[0m - already installed"
+    fi
 done
 
 ## PhotoGIMP
 
 if flatpak list | grep -q org.gimp.GIMP; then
-	cd ~/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
+    cd ~/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
     unzip PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
 
     cd 'PhotoGIMP by Diolinux v2020 for Flatpak/'
-	mv .icons/* ~/.icons
-	mv .var/* ~/.var
-	mv .local/share/applications/org.gimp.GIMP.desktop ~/.local/share/applications
+    
+    dirs_to_move=(
+        .var
+        .icons
+        .local/share/applications
+    )
+    for path in ${dirs_to_move[@]}; do
+        if [ ! -d ~/$path ]; then
+            mkdir -p ~/$path
+            mv $path/* ~/$path
+        fi
+            mv $path/* ~/$path
+    done
 
     # This is because rofi doesn't show the Photogimp icon in ~/.icons,
     # but can show the icon that Papirus have.
