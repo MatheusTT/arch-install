@@ -33,10 +33,10 @@ AUR_PACKAGES=(
     visual-studio-code-bin
     pop-shell-shortcuts-git
     gnome-shell-extension-pop-shell-git
-    gnome-shell-extension-dash-to-dock-gnome40-git
     ideapad-cm
     lib32-mangohud
     mangohud
+    ttf-twemoji
 )
 FLATPAKS=(
     org.gimp.GIMP
@@ -116,14 +116,7 @@ fi
 
 ## Emojis
 
-sudo pacman -S noto-fonts-emoji
-mkdir ~/.config/fontconfig
-
-echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE fontconfig SYSTEM "fonts.dtd">\n<fontconfig>\n
-<!-- ## serif ## -->\n  <alias>\n               <family>serif</family>\n                <prefer>\n                      <family>Noto Serif</family>\n                     <family>emoji</family>\n                        <family>Liberation Serif</family>\n
-        <family>Nimbus Roman</family>\n                 <family>DejaVu Serif</family>\n         </prefer>\n     </alias>\n      <!-- ## sans-serif ## -->\n       <alias>\n               <family>sans-serif</family>\n           <prefer>\n                      <family>Noto Sans</family>\n                      <family>emoji</family>\n                        <family>Liberation Sans</family>\n                        <family>Nimbus Sans</family>\n                  <family>DejaVu Sans</family>\n          </prefer>\n     </alias>\n</fontconfig>' > /home/$USER/.config/fontconfig/fonts.conf
-
-sudo fc-cache -f
+sudo ln -sf /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
 
 ## Ranger image preview
 
