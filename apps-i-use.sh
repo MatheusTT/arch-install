@@ -100,7 +100,7 @@ if flatpak list | grep -q org.gimp.GIMP; then
         if [ ! -d ~/$path ]; then
             mkdir -p ~/$path
             mv $path/* ~/$path
-        fi
+        else
             mv $path/* ~/$path
     done
 
@@ -117,6 +117,7 @@ fi
 ## Emojis
 
 sudo ln -sf /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
+sudo fc-cache -f
 
 ## Ranger image preview
 
