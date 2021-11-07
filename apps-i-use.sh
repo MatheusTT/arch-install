@@ -19,10 +19,8 @@ PACKAGES=(
     bashtop
     ranger
     neofetch
-    powerline-vim
-    powerline-fonts
-    power-profiles-daemon
-    ttf-font-awesome
+    gcolor3
+    ffmpegthumbnailer
 )
 
 AUR_PACKAGES=(
@@ -37,6 +35,9 @@ AUR_PACKAGES=(
     lib32-mangohud
     mangohud
     ttf-twemoji
+    nerd-fonts-fira-code
+    spotify
+    steam-fonts
 )
 FLATPAKS=(
     org.gimp.GIMP
