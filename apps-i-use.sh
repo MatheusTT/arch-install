@@ -9,7 +9,7 @@ PACKAGES=(
     file-roller
     eog
     vlc
-    gnome-{calculator,weather,passwordsafe}
+    gnome-calculator
     flatpak
     discord
     steam-native-runtime
@@ -21,22 +21,28 @@ PACKAGES=(
     neofetch
     gcolor3
     ffmpegthumbnailer
+    imagemagick
+    virtualbox
+    virtualbox-host-modules-arch
 )
 
 AUR_PACKAGES=(
     google-chrome
     chrome-gnome-shell-git
     pfetch
+    rxfetch
     timeshift
     visual-studio-code-bin
     pop-shell-shortcuts-git
     gnome-shell-extension-pop-shell-git
-    ideapad-cm
+    ipman
     lib32-mangohud
     mangohud
-    ttf-twemoji
-    nerd-fonts-fira-code
     spotify
+    nerd-fonts-fira-code
+    nerd-fonts-jetbrains-mono
+    ttf-twemoji
+    ttf-ms-fonts
     steam-fonts
 )
 FLATPAKS=(
