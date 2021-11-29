@@ -3,8 +3,14 @@
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc --utc
 
+pacman -Syy rsync reflector
+
 reflector -c Brazil -a 6 --sort rate --save /etc/pacman.d/mirrorlist
-pacman -Syy
+for i in 33 37 93 94 ; do
+  sed -i "$i s/#//" /etc/pacman.conf
+done
+sed -i "38i\ILoveCandy" /etc/pacman.conf
+
 
 LANG="pt_BR.UTF-8 UTF-8"
 sed -i "s/#$LANG/$LANG/" /etc/locale.gen
@@ -16,6 +22,7 @@ locale-gen
 
 echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
 echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
+
 HOSTNAME="arch"
 echo "$HOSTNAME" >> /etc/hostname
 echo "
@@ -34,17 +41,16 @@ passwd broa
 sed -i "82s/./ /" /etc/sudoers
 
 
-echo -e "\n\033[1;32mInstalling grub, networkmanager, reflector, etc.\033[0m"
+echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 # You can add "os-prober" here, if you have more than one OS.
-pacman -S grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} ntfs-3g rsync reflector tlp
+pacman -Syy grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g tlp
 
-echo -e "\n\033[1;32mInstalling pipewire, wayland and xwayland\033[0m"
-pacman -S pipewire pipewire-{alsa,jack,media-session,pulse} xorg-{server,xwayland,xrandr,xinput,setxkbmap,xrdb,xkill} 
+echo -e "\n\033[1;32mInstalling pipewire, xorg and bluez\033[0m"
+pacman -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg-{server,xrandr,xinput,setxkbmap,xrdb,xkill} bluez bluez-utils 
 
 #pacman -S nvidia nvidia-{utils,settings} lib32-nvidia-utils
 
-#LC_ALL=C xdg-user-dirs-update --force
-echo "C" > /home/$USER/.config/user-dirs.locale
+LC_ALL=C xdg-user-dirs-update --force
 
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
 sed -i "52s/ autodetect/ autodetect keyboard keymap/" /etc/mkinitcpio.conf
