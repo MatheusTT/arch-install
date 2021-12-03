@@ -58,9 +58,9 @@ FLATPAKS=(
 echo -e "\033[1;34mArch Packages:\033[0m"
 
 for package in ${PACKAGES[@]} ; do
-    if ( ! pacman -Qs $package 1>/dev/null ) ; then
+    if ( ! pacman -Qs "^$package" >/dev/null ) ; then
         echo -e "\033[0;32m[$package]\033[0m - Installing..."
-        sudo pacman -S --noconfirm $package 1>/dev/null &&
+        sudo pacman -S --noconfirm $package >/dev/null &&
         echo -e "\033[0;32m[$package]\033[0m - Installed successfully!\n"
     else
         echo -e "\033[0;32m[$package]\033[0m - Already installed"
@@ -72,16 +72,16 @@ done
 ## AUR
 echo -e "\n\033[1;34mAUR Packages:\033[0m"
 
-if ( ! pacman -Qm paru 1>/dev/null ) ; then
+if ( ! pacman -Qs "^paru" >/dev/null ) ; then
     cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru.git
     cd paru && makepkg -sic --noconfirm 1>/dev/null 
 fi
 
 
 for aur_pkg in ${AUR_PACKAGES[@]} ; do
-    if ( ! pacman -Qm $aur_pkg 1>/dev/null ) ; then
+    if ( ! pacman -Qs "^$aur_pkg" >/dev/null ) ; then
         echo -e "\033[0;32m[$aur_pkg]\033[0m - Installing..."
-        paru -S --noconfirm "$aur_pkg" 1>/dev/null &&
+        paru -S --noconfirm "$aur_pkg" >/dev/null &&
         echo -e "\033[0;32m[$aur_pkg]\033[0m - Installed successfully!\n"
     else
         echo -e "\033[0;32m[$aur_pkg]\033[0m - Already installed"
@@ -98,13 +98,15 @@ echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
 for flatpak_pkg in ${FLATPAKS[@]} ; do
     if ( flatpak list | grep -q $flatpak_pkg ) ; then
         echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Installing..."
-        flatpak install -y "$flatpak_pkg" 1>/dev/null &&
+        flatpak install -y "$flatpak_pkg" >/dev/null &&
         echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Installed successfully!\n"
     else
         echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Already installed"
     fi
 done
 
+## Must enable cronie.service for timeshift to work
+sudo systemctl enable cronie.service
 
 
 ## PhotoGIMP
@@ -129,9 +131,9 @@ if ( flatpak list | grep -q org.gimp.GIMP ) ; then
         fi
     done
 
-    # This is because rofi doesn't show the Photogimp icon in ~/.icons,
+    # This is because rofi doesn't show the PhotoGIMP icon in ~/.icons,
     # but can show the icon that Papirus have.
-    if ( find /usr/share/icons -name "photogimp*" 1>/dev/null ) ; then
+    if ( find /usr/share/icons -name "photogimp*" >/dev/null ) ; then
         sed -i "s/.png//g" ~/.local/share/applications/org.gimp.GIMP.desktop
     fi
 
@@ -143,14 +145,3 @@ fi
 
 sudo ln -sf /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
 sudo fc-cache -f
-
-## Ranger image preview
-
-if [ ! -d ~/.config/ranger ] ; then
-    mkdir ~/.config/ranger
-    echo "set preview_images true
-set preview_images_method kitty" >> ~/.config/ranger/rc.conf
-else
-    echo "set preview_images true
-set preview_images_method kitty" >> ~/.config/ranger/rc.conf
-fi

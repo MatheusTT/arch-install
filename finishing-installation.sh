@@ -43,7 +43,7 @@ sed -i "82s/./ /" /etc/sudoers
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 # You can add "os-prober" here, if you have more than one OS.
-pacman -Syy grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g tlp
+pacman -Syy grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g gufw tlp
 
 echo -e "\n\033[1;32mInstalling pipewire, xorg and bluez\033[0m"
 pacman -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg-{server,xrandr,xinput,setxkbmap,xrdb,xkill} bluez bluez-utils 
@@ -65,6 +65,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 echo -e "\033[1;32menabling some services\033[0m"
 systemctl enable NetworkManager
+systemctl enable ufw
 systemctl enable tlp
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
