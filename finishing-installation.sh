@@ -46,15 +46,15 @@ echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 pacman -Syy grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g gufw tlp
 
 echo -e "\n\033[1;32mInstalling pipewire, xorg and bluez\033[0m"
-pacman -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg-{server,xrandr,xinput,setxkbmap,xrdb,xkill} bluez bluez-utils 
+pacman -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg xorg-apps bluez bluez-utils 
 
 #pacman -S nvidia nvidia-{utils,settings} lib32-nvidia-utils
 
 LC_ALL=C xdg-user-dirs-update --force
 
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
-sed -i "52s/ autodetect/ autodetect keyboard keymap/" /etc/mkinitcpio.conf
-#sed -i "52s/ block/ block encrypt/" /etc/mkinitcpio.conf
+sed -i "52s/autodetect/autodetect keyboard keymap/" /etc/mkinitcpio.conf
+#sed -i "52s/block/block encrypt/" /etc/mkinitcpio.conf
 mkinitcpio -p linux
 
 
