@@ -10,18 +10,16 @@ SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
 
 ## GTK Theme, icons, and the cursor theme
-paru -S --noconfirm matcha-gtk-theme papirus-icon-theme
+sudo pacman -S --noconfirm papirus-icon-theme
+
+wget https://github.com/dracula/gtk/archive/master.zip -P /tmp/
+unzip /tmp/master.zip -d /tmp
+sudo mv /tmp/gtk-master /usr/share/themes/Dracula
 
 sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
 
 ## Fonts
-for font in ttf-fira-{code,mono,sans}; do
-    if ! pacman -Qs | grep -q $font; then
-        sudo pacman -S --noconfirm "$font"
-    fi
-done
-
-
+sudo pacman -S --noconfirm --needed ttf-fira-{code,mono,sans}
 
 ## Gnome configuration
 #sh $SCRIPT_DIR/gnome-configuration.sh

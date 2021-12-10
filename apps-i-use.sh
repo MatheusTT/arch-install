@@ -73,7 +73,7 @@ done
 echo -e "\n\033[1;34mAUR Packages:\033[0m"
 
 if ( ! pacman -Qs "^paru" >/dev/null ) ; then
-    cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru.git
+    cd /tmp && git clone --depth=1 https://aur.archlinux.org/paru.git 1>/dev/null
     cd paru && makepkg -sic --noconfirm 1>/dev/null 
 fi
 
@@ -81,7 +81,7 @@ fi
 for aur_pkg in ${AUR_PACKAGES[@]} ; do
     if ( ! pacman -Qs "^$aur_pkg" >/dev/null ) ; then
         echo -e "\033[0;32m[$aur_pkg]\033[0m - Installing..."
-        paru -S --noconfirm "$aur_pkg" >/dev/null &&
+        paru -S --noconfirm "$aur_pkg" &&
         echo -e "\033[0;32m[$aur_pkg]\033[0m - Installed successfully!\n"
     else
         echo -e "\033[0;32m[$aur_pkg]\033[0m - Already installed"
@@ -96,9 +96,9 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
 
 for flatpak_pkg in ${FLATPAKS[@]} ; do
-    if ( flatpak list | grep -q $flatpak_pkg ) ; then
+    if ( ! flatpak list | grep -q $flatpak_pkg ) ; then
         echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Installing..."
-        flatpak install -y "$flatpak_pkg" >/dev/null &&
+        flatpak install -y "$flatpak_pkg" &&
         echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Installed successfully!\n"
     else
         echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Already installed"
