@@ -27,7 +27,6 @@ sudo pacman -S --noconfirm --needed ttf-fira-{code,mono,sans}
 
 ## Mouse and Touchpad configuration
 # There's no need to run these if you already run $SCRIPT_DIR/gnome-configuration.sh.
-
 sudo su -c 'cat << EOF > /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
 Section "InputClass"
     Identifier "My Mouse"
@@ -50,6 +49,23 @@ Section "InputClass"
     Option "AccelProfile" "flat"
 EndSection
 EOF'
+
+
+## Oh My Zsh
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+
+
+## Generating a SSH Key for GitHub
+if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null) ) ; then
+    read -p "Enter your github email: " git_email
+    ssh-keygen -t ed25519 -C "$git_email"
+
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_ed25519
+
+    echo -e "\033[1;29mThat's the key you have to copy:
+    \033[0;32m$(cat ~/.ssh/id_ed25519.pub)\033[0m"
+fi
 
 echo "
 
