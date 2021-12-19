@@ -8,6 +8,14 @@ fi
 # Directory where the script is
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
+## Reflector configuration
+sudo su -c 'sed -i "s/^--/# --/" /etc/xdg/reflector/reflector.conf'
+sudo su -c 'echo -e "
+--country Brazil
+--protocol \"https,http\"
+--age 6
+--sort rate
+--save /etc/pacman.d/mirrorlist" >> /etc/xdg/reflector/reflector.conf'
 
 ## GTK Theme, icons, and the cursor theme
 sudo pacman -S --noconfirm papirus-icon-theme
@@ -45,19 +53,17 @@ Section "InputClass"
     Option "Tapping" "on"
     Option "TappingButtonMap" "lrm"
     Option "NaturalScrolling" "true"
-    Option "AccelSpeed" "0"
+    Option "AccelSpeed" "0.9"
     Option "AccelProfile" "flat"
 EndSection
 EOF'
 
 
-## Oh My Zsh
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-
-
 ## Generating a SSH Key for GitHub
 if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null) ) ; then
     read -p "Enter your github email: " git_email
+    read -p "Enter your github user name: " git_name
+
     ssh-keygen -t ed25519 -C "$git_email"
 
     eval "$(ssh-agent -s)"
@@ -65,7 +71,15 @@ if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null) ) ; then
 
     echo -e "\033[1;29mThat's the key you have to copy:
     \033[0;32m$(cat ~/.ssh/id_ed25519.pub)\033[0m"
+
+    git config --global user.name "$git_name"
+    git config --global user.email $git_email
+    git config --global core.editor nvim
+
 fi
+
+## Oh My Zsh
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
 
 echo "
 
