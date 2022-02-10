@@ -38,8 +38,15 @@ useradd -mg users -G wheel -c Matheus -s /usr/bin/zsh broa
 echo -e "\n\033[1;32mPassword for broa\033[0m"
 passwd broa
 
-sed -i "82s/./ /" /etc/sudoers
-
+#root privileges with sudo
+#sed -i "82s/./ /" /etc/sudoers
+#root privileges with doas
+pacman -Rns sudo && pacman -S opendoas
+ln -s $(which doas) /usr/bin/sudo
+cat << EOF > /etc/doas.conf
+permit persist :wheel as root
+permit :wheel as root cmd su
+EOF
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 # You can add "os-prober" here, if you have more than one OS.
