@@ -26,6 +26,8 @@ PACKAGES=(
     imagemagick
     virtualbox-host-modules-arch
     virtualbox
+    gdu
+    yt-dlp
 )
 
 AUR_PACKAGES=(
@@ -46,6 +48,8 @@ AUR_PACKAGES=(
     ttf-twemoji
     ttf-ms-fonts
     steam-fonts
+    optimus-manager
+    mugshot
 )
 FLATPAKS=(
     org.gimp.GIMP
@@ -91,7 +95,6 @@ done
 
 
 ## Flatpak
-
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
 
@@ -110,8 +113,7 @@ sudo systemctl enable cronie.service
 
 
 ## PhotoGIMP
-
-if ( flatpak list | grep -q org.gimp.GIMP ) ; then
+if ( flatpak list | grep -q org.gimp.GIMP ) && [[ ! -f ~/.local/share/applications/org.gimp.GIMP.desktop ]]; then
     cd ~/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
     unzip PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
 
@@ -142,6 +144,5 @@ if ( flatpak list | grep -q org.gimp.GIMP ) ; then
 fi
 
 ## Emojis
-
 sudo ln -sf /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
 sudo fc-cache -f

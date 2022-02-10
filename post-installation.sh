@@ -79,7 +79,7 @@ if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null) ) ; then
 fi
 
 ## Oh My Zsh
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
 
 echo "
 
