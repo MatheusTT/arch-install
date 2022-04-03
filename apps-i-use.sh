@@ -47,7 +47,6 @@ AUR_PACKAGES=(
     nerd-fonts-jetbrains-mono
     ttf-twemoji
     ttf-ms-fonts
-    steam-fonts
     optimus-manager
     mugshot
 )
