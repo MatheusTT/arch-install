@@ -1,29 +1,43 @@
 #!/bin/bash
 
+LANG="pt_BR.UTF-8"
+LANG2="en_US.UTF-8"
+KEYMAP="br-abnt2"
+
+USERNAME="broa"
+HOSTNAME="arch"
+BOOTLOADER_ID="Arch"
+
+USE_DOAS=true
+
 ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 hwclock --systohc --utc
 
 pacman -Syy rsync reflector
 
 reflector -c Brazil -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+## Reflector configuration
+sed -i "s/^--/# --/" /etc/xdg/reflector/reflector.conf
+echo -e "
+--country Brazil
+--protocol \"https,http\"
+--age 6
+--sort rate
+--save /etc/pacman.d/mirrorlist" >> /etc/xdg/reflector/reflector.conf
+
+
 for i in 33 37 93 94 ; do
   sed -i "$i s/#//" /etc/pacman.conf
 done
 sed -i "38i\ILoveCandy" /etc/pacman.conf
 
-
-LANG="pt_BR.UTF-8 UTF-8"
 sed -i "s/#$LANG/$LANG/" /etc/locale.gen
-
-LANG2="en_US.UTF-8 UTF-8"
 sed -i "s/#$LANG2/$LANG2/" /etc/locale.gen
-
 locale-gen
 
-echo "LANG=pt_BR.UTF-8" >> /etc/locale.conf
-echo "KEYMAP=br-abnt2" >> /etc/vconsole.conf
+echo "LANG=$LANG" >> /etc/locale.conf
+echo "KEYMAP=$KEYMAP" >> /etc/vconsole.conf
 
-HOSTNAME="arch"
 echo "$HOSTNAME" >> /etc/hostname
 echo "
 127.0.0.1   localhost
@@ -34,19 +48,22 @@ echo "
 #echo -e "\n\033[1;32mPassword for root\033[0m"
 #passwd root
 
-useradd -mg users -G wheel -c Matheus -s /usr/bin/zsh broa
-echo -e "\n\033[1;32mPassword for broa\033[0m"
-passwd broa
+useradd -mg users -G wheel -s /usr/bin/zsh $USENAME
+echo -e "\n\033[1;32mPassword for $USERNAME\033[0m"
+passwd $USERNAME
 
-#root privileges with sudo
-#sed -i "82s/./ /" /etc/sudoers
-#root privileges with doas
-pacman -Rns sudo && pacman -S opendoas
-ln -s $(which doas) /usr/bin/sudo
-cat << EOF > /etc/doas.conf
+if $USE_DOAS ; then
+  #root privileges with doas
+  pacman -Rns sudo && pacman -S opendoas
+  ln -s $(which doas) /usr/bin/sudo
+  cat << EOF > /etc/doas.conf
 permit persist :wheel as root
 permit :wheel as root cmd su
 EOF
+else
+  #root privileges with sudo
+  sed -i "82s/./ /" /etc/sudoers
+fi
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 # You can add "os-prober" here, if you have more than one OS.
@@ -66,7 +83,8 @@ mkinitcpio -p linux
 
 
 echo -e "\n\033[1;32mgrub-install\033[0m"
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=$BOOTLOADER_ID --recheck
+#vim /etc/default/grub
 echo -e "\n\033[1;32mgrub-mkconfig\033[0m"
 grub-mkconfig -o /boot/grub/grub.cfg
 

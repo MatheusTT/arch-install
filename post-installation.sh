@@ -8,14 +8,6 @@ fi
 # Directory where the script is
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
-## Reflector configuration
-sudo su -c 'sed -i "s/^--/# --/" /etc/xdg/reflector/reflector.conf'
-sudo su -c 'echo -e "
---country Brazil
---protocol \"https,http\"
---age 6
---sort rate
---save /etc/pacman.d/mirrorlist" >> /etc/xdg/reflector/reflector.conf'
 
 ## GTK Theme, icons, and the cursor theme
 sudo pacman -S --noconfirm papirus-icon-theme
