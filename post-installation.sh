@@ -9,18 +9,6 @@ fi
 SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
 
-## GTK Theme, icons, and the cursor theme
-sudo pacman -S --noconfirm papirus-icon-theme
-
-wget https://github.com/dracula/gtk/archive/master.zip -P /tmp/
-unzip /tmp/master.zip -d /tmp
-sudo mv /tmp/gtk-master /usr/share/themes/Dracula
-
-sudo mv $SCRIPT_DIR/cz-Hickson-Black /usr/share/icons/
-
-## Fonts
-sudo pacman -S --noconfirm --needed ttf-fira-{code,mono,sans}
-
 ## Gnome configuration
 #sh $SCRIPT_DIR/gnome-configuration.sh
 
@@ -52,7 +40,7 @@ EOF'
 
 
 ## Generating a SSH Key for GitHub
-if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null) ) ; then
+if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null)); then
     read -p "Enter your github email: " git_email
     read -p "Enter your github user name: " git_name
 
@@ -67,12 +55,8 @@ if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null) ) ; then
     git config --global user.name "$git_name"
     git config --global user.email $git_email
     git config --global core.editor nvim
+    git config --global init.defaultBranch master
 
 fi
 
-## Oh My Zsh
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" "" --unattended
-
-echo "
-
-Everything is done!"
+echo -e"\n\nEverything is done!"
