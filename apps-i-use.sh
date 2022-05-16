@@ -13,7 +13,6 @@ PACKAGES=(
     flatpak
     discord
     steam-native-runtime
-    wine
     qbittorrent
     telegram-desktop
     btop
@@ -32,16 +31,13 @@ PACKAGES=(
 
 AUR_PACKAGES=(
     google-chrome
-    chrome-gnome-shell-git
     pfetch
     rxfetch
     timeshift
     visual-studio-code-bin
-    pop-shell-shortcuts-git
-    gnome-shell-extension-pop-shell-git
     ipman
-    lib32-mangohud
-    mangohud
+    lib32-mangohud-x11
+    mangohud-common-x11
     spotify
     nerd-fonts-fira-code
     nerd-fonts-jetbrains-mono
