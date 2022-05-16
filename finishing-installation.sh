@@ -3,23 +3,26 @@
 LANG="pt_BR.UTF-8"
 LANG2="en_US.UTF-8"
 KEYMAP="br-abnt2"
+COUNTRY="Brazil"
+TIMEZONE="America/Sao_Paulo"
 
 USERNAME="broa"
+USERSHELL="/usr/bin/zsh"
 HOSTNAME="arch"
 BOOTLOADER_ID="Arch"
 
 USE_DOAS=true
 
-ln -sf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 hwclock --systohc --utc
 
 pacman -Syy rsync reflector
 
-reflector -c Brazil -a 6 --sort rate --save /etc/pacman.d/mirrorlist
+reflector -c $COUNTRY -a 6 --sort rate --save /etc/pacman.d/mirrorlist
 ## Reflector configuration
 sed -i "s/^--/# --/" /etc/xdg/reflector/reflector.conf
 echo -e "
---country Brazil
+--country $COUNTRY
 --protocol \"https,http\"
 --age 6
 --sort rate
@@ -48,7 +51,7 @@ echo "
 #echo -e "\n\033[1;32mPassword for root\033[0m"
 #passwd root
 
-useradd -mg users -G wheel -s /usr/bin/zsh $USENAME
+useradd -mg users -G wheel -s $USERSHELL $USERNAME
 echo -e "\n\033[1;32mPassword for $USERNAME\033[0m"
 passwd $USERNAME
 
