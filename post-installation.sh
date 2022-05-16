@@ -1,8 +1,8 @@
 #!/bin/bash
 
 if [ "$(whoami)" == "root" ]; then
-    echo "Script must be run as a normal user"
-    exit
+  echo "Script must be run as a normal user"
+  exit
 fi
 
 # Directory where the script is
@@ -41,22 +41,21 @@ EOF'
 
 ## Generating a SSH Key for GitHub
 if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null)); then
-    read -p "Enter your github email: " git_email
-    read -p "Enter your github user name: " git_name
+  read -p "Enter your github email: " git_email
+  read -p "Enter your github user name: " git_name
 
-    ssh-keygen -t ed25519 -C "$git_email"
+  ssh-keygen -t ed25519 -C "$git_email"
 
-    eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_ed25519
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_ed25519
 
-    echo -e "\033[1;29mThat's the key you have to copy:
-    \033[0;32m$(cat ~/.ssh/id_ed25519.pub)\033[0m"
+  echo -e "\033[1;29mThat's the key you have to copy:
+  \033[0;32m$(cat ~/.ssh/id_ed25519.pub)\033[0m"
 
-    git config --global user.name "$git_name"
-    git config --global user.email $git_email
-    git config --global core.editor nvim
-    git config --global init.defaultBranch master
-
+  git config --global user.name "$git_name"
+  git config --global user.email $git_email
+  git config --global core.editor nvim
+  git config --global init.defaultBranch master
 fi
 
 echo -e"\n\nEverything is done!"
