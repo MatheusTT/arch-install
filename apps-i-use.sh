@@ -35,7 +35,6 @@ AUR_PACKAGES=(
   rxfetch
   timeshift
   visual-studio-code-bin
-  ipman
   lib32-mangohud-x11
   mangohud-common-x11
   spotify
@@ -141,3 +140,7 @@ fi
 ## Emojis
 sudo ln -sf /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
 sudo fc-cache -f
+
+## Optimus Manager
+KERNEL_PARAMETER="optimus-manager.startup=hybrid"
+sed -i "s+CMDLINE_LINUX=\"+&$KERNEL_PARAMETER +" /etc/default/grub

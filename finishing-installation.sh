@@ -12,6 +12,7 @@ HOSTNAME="arch"
 BOOTLOADER_ID="Arch"
 
 USE_DOAS=true
+DO_ENCRYPTION=false
 
 ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 hwclock --systohc --utc
@@ -55,7 +56,7 @@ useradd -mg users -G wheel -s $USERSHELL $USERNAME
 echo -e "\n\033[1;32mPassword for $USERNAME\033[0m"
 passwd $USERNAME
 
-if $USE_DOAS ; then
+if $USE_DOAS; then
   #root privileges with doas
   pacman -Rns sudo && pacman -S opendoas
   ln -s $(which doas) /usr/bin/sudo
@@ -81,7 +82,16 @@ LC_ALL=C xdg-user-dirs-update --force
 
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
 sed -i "52s/autodetect/autodetect keyboard keymap/" /etc/mkinitcpio.conf
-#sed -i "52s/block/block encrypt/" /etc/mkinitcpio.conf
+
+if DO_ENCRYPTION; then
+  sed -i "52s/block/block encrypt/" /etc/mkinitcpio.conf
+
+  CRYPT_UUID=$(lsblk -f | awk '/crypto_LUKS/ { print $4 }')
+  CRYPT_NAME="cryptroot"
+  KERNEL_PARAMETER="cryptdevice=UUID=$CRYPT_UUID:cryptroot root=/dev/mapper/$CRYPT_NAME"
+  sed -i "s+CMDLINE_LINUX=\"+&$KERNEL_PARAMETER+" /etc/default/grub
+fi
+
 mkinitcpio -p linux
 
 
