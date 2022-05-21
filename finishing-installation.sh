@@ -17,7 +17,7 @@ DO_ENCRYPTION=false
 ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 hwclock --systohc --utc
 
-pacman -Syy rsync reflector
+pacman --noconfirm -Syy rsync reflector
 
 reflector -c $COUNTRY -a 6 --sort rate --save /etc/pacman.d/mirrorlist
 ## Reflector configuration
@@ -34,6 +34,7 @@ for i in 33 37 93 94 ; do
   sed -i "$i s/#//" /etc/pacman.conf
 done
 sed -i "38i\ILoveCandy" /etc/pacman.conf
+pacman -Syy
 
 sed -i "s/#$LANG/$LANG/" /etc/locale.gen
 sed -i "s/#$LANG2/$LANG2/" /etc/locale.gen
@@ -71,10 +72,10 @@ fi
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 # You can add "os-prober" here, if you have more than one OS.
-pacman -Syy grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g gufw tlp libappimage
+pacman --noconfirm -S grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g gufw tlp libappimage
 
 echo -e "\n\033[1;32mInstalling pipewire, xorg and bluez\033[0m"
-pacman -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg xorg-apps bluez bluez-utils 
+pacman --noconfirm -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg xorg-apps bluez bluez-utils 
 
 #pacman -S nvidia nvidia-{utils,settings} lib32-nvidia-utils
 
@@ -83,7 +84,7 @@ LC_ALL=C xdg-user-dirs-update --force
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
 sed -i "52s/autodetect/autodetect keyboard keymap/" /etc/mkinitcpio.conf
 
-if DO_ENCRYPTION; then
+if $DO_ENCRYPTION; then
   sed -i "52s/block/block encrypt/" /etc/mkinitcpio.conf
 
   CRYPT_UUID=$(lsblk -f | awk '/crypto_LUKS/ { print $4 }')
