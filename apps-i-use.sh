@@ -54,17 +54,7 @@ FLATPAKS=(
 
 ## Arch
 echo -e "\033[1;34mArch Packages:\033[0m"
-
-for package in ${PACKAGES[@]}; do
-  if ( ! pacman -Qs "^$package" >/dev/null ); then
-    echo -e "\033[0;32m[$package]\033[0m - Installing..."
-    sudo pacman -S --noconfirm $package >/dev/null &&
-    echo -e "\033[0;32m[$package]\033[0m - Installed successfully!\n"
-  else
-    echo -e "\033[0;32m[$package]\033[0m - Already installed"
-  fi
-done
-
+pacman -S --needed --noconfirm ${PACKAGES[@]}
 
 
 ## AUR
@@ -91,16 +81,8 @@ done
 ## Flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
+flatpak install ${FLATPAKS[@]}
 
-for flatpak_pkg in ${FLATPAKS[@]}; do
-  if ( ! flatpak list | grep -q $flatpak_pkg ); then
-    echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Installing..."
-    flatpak install -y "$flatpak_pkg" &&
-    echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Installed successfully!\n"
-  else
-    echo -e "\033[0;32m[$flatpak_pkg]\033[0m - Already installed"
-  fi
-done
 
 ## Must enable cronie.service for timeshift to work
 sudo systemctl enable cronie.service
