@@ -59,7 +59,7 @@ passwd $USERNAME
 
 if $USE_DOAS; then
   #root privileges with doas
-  pacman -Rns sudo && pacman -S opendoas
+  pacman -Rns --noconfirm sudo && pacman -S --noconfirm opendoas
   ln -s $(which doas) /usr/bin/sudo
   cat << EOF > /etc/doas.conf
 permit persist :wheel as root
@@ -91,6 +91,7 @@ if $DO_ENCRYPTION; then
   CRYPT_NAME="cryptroot"
   KERNEL_PARAMETER="cryptdevice=UUID=$CRYPT_UUID:cryptroot root=/dev/mapper/$CRYPT_NAME"
   sed -i "s+CMDLINE_LINUX=\"+&$KERNEL_PARAMETER+" /etc/default/grub
+  sed -i "s/#GRUB_ENABLE_CRYPTODISK=y/GRUB_ENABLE_CRYPTODISK=y/" /etc/default/grub
 fi
 
 mkinitcpio -p linux
