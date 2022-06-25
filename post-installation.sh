@@ -15,6 +15,7 @@ SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
 
 ## Mouse and Touchpad configuration
 # There's no need to run these if you already run $SCRIPT_DIR/gnome-configuration.sh.
+[[ -d /etc/X11/xorg.conf.d ]] || sudo mkdir /etc/X11/xorg.conf.d
 sudo su -c 'cat << EOF > /etc/X11/xorg.conf.d/50-mouse-acceleration.conf
 Section "InputClass"
     Identifier "My Mouse"
@@ -39,6 +40,7 @@ EndSection
 EOF'
 
 ## SysCTL
+doas pacman -S systeroid openssh 
 doas su -c 'cat << EOF > /etc/sysctl.d/99-sysctl.conf
 # /etc/sysctl.d/99-sysctl.conf
 

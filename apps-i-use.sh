@@ -35,14 +35,13 @@ AUR_PACKAGES=(
   rxfetch
   timeshift
   visual-studio-code-bin
-  lib32-mangohud-x11
-  mangohud-common-x11
+  lib32-mangohud-git
+  mangohud-common-git
   spotify
   nerd-fonts-fira-code
   nerd-fonts-jetbrains-mono
   ttf-twemoji
   ttf-ms-fonts
-  optimus-manager
   mugshot
 )
 FLATPAKS=(
@@ -54,7 +53,7 @@ FLATPAKS=(
 
 ## Arch
 echo -e "\033[1;34mArch Packages:\033[0m"
-pacman -S --needed --noconfirm ${PACKAGES[@]}
+sudo pacman -S --needed --noconfirm ${PACKAGES[@]}
 
 
 ## AUR
@@ -81,7 +80,7 @@ done
 ## Flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
-flatpak install ${FLATPAKS[@]}
+flatpak install -y ${FLATPAKS[@]}
 
 
 ## Must enable cronie.service for timeshift to work
@@ -122,7 +121,3 @@ fi
 ## Emojis
 sudo ln -sf /usr/share/fontconfig/conf.avail/75-twemoji.conf /etc/fonts/conf.d/75-twemoji.conf
 sudo fc-cache -f
-
-## Optimus Manager
-KERNEL_PARAMETER="optimus-manager.startup=hybrid"
-sed -i "s+CMDLINE_LINUX=\"+&$KERNEL_PARAMETER +" /etc/default/grub
