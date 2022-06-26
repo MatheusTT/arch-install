@@ -5,11 +5,8 @@ if [ "$(whoami)" == "root" ]; then
   exit
 fi
 
-# Directory where the script is
-SCRIPT_DIR="$( dirname "${BASH_SOURCE[0]}" )"
-
-
 ## Gnome configuration
+#SCRIPT_DIR="$(realpath $(dirname "${BASH_SOURCE[@]}"))"
 #sh $SCRIPT_DIR/gnome-configuration.sh
 
 
