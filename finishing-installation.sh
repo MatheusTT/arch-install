@@ -49,11 +49,19 @@ echo "
 ::1         localhost
 127.0.1.1   $HOSTNAME.localdomain  $HOSTNAME" >> /etc/hosts
 
+echo "options timeout:1
+options single-request
+
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+nameserver 8.8.8.8" | tee /etc/resolv.conf
+chattr +i /etc/resolv.conf
+
 
 #echo -e "\n\033[1;32mPassword for root\033[0m"
 #passwd root
 
-useradd -mg users -G wheel -s $USERSHELL $USERNAME
+useradd -mg users -G wheel,input,video -s $USERSHELL $USERNAME
 echo -e "\n\033[1;32mPassword for $USERNAME\033[0m"
 passwd $USERNAME
 
@@ -102,6 +110,14 @@ grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=$BOOTLOAD
 #vim /etc/default/grub
 echo -e "\n\033[1;32mgrub-mkconfig\033[0m"
 grub-mkconfig -o /boot/grub/grub.cfg
+
+## Blacklisting some kernel modules
+echo "blacklist iTCO_wdt
+blacklist pcspkr
+blacklist joydev
+blacklist mousedev
+blacklist mac_hid" | tee /etc/modprobe.d/blacklist.conf
+
 
 echo -e "\033[1;32menabling some services\033[0m"
 systemctl enable NetworkManager
