@@ -29,11 +29,12 @@ echo -e "
 --sort rate
 --save /etc/pacman.d/mirrorlist" >> /etc/xdg/reflector/reflector.conf
 
-
-for i in 33 37 93 94 ; do
-  sed -i "$i s/#//" /etc/pacman.conf
-done
-sed -i "38i\ILoveCandy" /etc/pacman.conf
+## Configuring pacman
+sed -i 's/#ParallelDownloads/ParallelDownloads' /etc/pacman.conf
+sed -i 's/#Color/Color' /etc/pacman.conf
+sed -i '/ParallelDownloads/ a\ILoveCandy\' /etc/pacman.conf
+sed -i 's/\#[multilib\]/\[multilib\]/' /etc/pacman.conf
+sed -i '/\[multilib\]/{n;s/#Include/Include/;}' /etc/pacman.conf
 pacman -Syy
 
 sed -i "s/#$LANG/$LANG/" /etc/locale.gen
@@ -75,19 +76,18 @@ permit :wheel as root cmd su
 EOF
 else
   #root privileges with sudo
-  sed -i "82s/./ /" /etc/sudoers
+  sed -i "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/" /etc/sudoers
 fi
 
 echo -e "\n\033[1;32mInstalling grub, networkmanager, wget, etc.\033[0m"
 # You can add "os-prober" here, if you have more than one OS.
-pacman --noconfirm -S grub efibootmgr dosfstools mtools networkmanager xdg-{utils,user-dirs} wget man-db ntfs-3g gufw tlp libappimage
+pacman --noconfirm -S grub efibootmgr dosfstools networkmanager xdg-utils wget man-db ntfs-3g gufw tlp libappimage irqbalance
 
-echo -e "\n\033[1;32mInstalling pipewire, xorg and bluez\033[0m"
-pacman --noconfirm -S pipewire pipewire-{alsa,jack,pulse} wireplumber xorg xorg-apps bluez bluez-utils 
+echo -e "\n\033[1;32mInstalling pipewire and bluez\033[0m"
+pacman --noconfirm -S pipewire pipewire-{alsa,jack,pulse} wireplumber bluez bluez-utils 
 
 #pacman -S nvidia nvidia-{utils,settings} lib32-nvidia-utils
-
-LC_ALL=C xdg-user-dirs-update --force
+pacman -S vulkan-radeon lib32-vulkan-radeon mesa
 
 sed -i "52s/ keyboard//g" /etc/mkinitcpio.conf
 sed -i "52s/autodetect/autodetect keyboard keymap/" /etc/mkinitcpio.conf
@@ -113,6 +113,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 ## Blacklisting some kernel modules
 echo "blacklist iTCO_wdt
+blacklist sp5100_tco
 blacklist pcspkr
 blacklist joydev
 blacklist mousedev
@@ -120,11 +121,19 @@ blacklist mac_hid" | tee /etc/modprobe.d/blacklist.conf
 
 
 echo -e "\033[1;32menabling some services\033[0m"
-systemctl enable NetworkManager
-systemctl enable ufw
-systemctl enable tlp
+systemctl enable NetworkManager.service
+systemctl enable ufw.service
+systemctl enable tlp.service
+systemctl enable irqbalance.service
 systemctl enable reflector.timer
 systemctl enable fstrim.timer
+
+## Setting up ufw
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow ssh
+ufw allow 25565
+ufw enable
 
 echo "
 Now just do:

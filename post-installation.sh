@@ -62,6 +62,7 @@ net.ipv4.tcp_max_tw_buckets = 2000000
 net.ipv4.tcp_tw_reuse = 1
 net.ipv4.tcp_fin_timeout = 10
 net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_mtu_probing = 1
 
 net.ipv4.conf.all.accept_redirects = 0
 net.ipv4.conf.all.secure_redirects = 0
@@ -69,6 +70,8 @@ net.ipv4.conf.all.send_redirects = 0
 net.ipv4.conf.default.accept_redirects = 0
 net.ipv4.conf.default.secure_redirects = 0
 net.ipv4.conf.default.send_redirects = 0
+
+kernel.split_lock_mitigate=0
 EOF'
 
 
@@ -90,5 +93,38 @@ if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null)); then
   git config --global core.editor nvim
   git config --global init.defaultBranch master
 fi
+
+## Creating a swap file
+mkswap -U clear --size 4G --file /swapfile
+swapon /swapfile
+sudo su -c 'cat << EOF >> /etc/fstab
+
+# /swapfile
+/swapfile none swap defaults 0 0
+EOF'
+
+
+## CoreCtrl and GameMode
+sudo pacman -S corectrl gamemode
+cp /usr/share/applications/org.corectrl.CoreCtrl.desktop ~/.config/autostart/org.corectrl.CoreCtrl.desktop
+
+[[ ! -d /etc/polkit-1/rules.d/ ]] && sudo mkdir /etc/polkit-1/rules.d/
+sudo su -c 'cat << EOF > /etc/polkit-1/rules.d/90-corectrl.rules
+polkit.addRule(function(action, subject) {
+    if ((action.id == "org.corectrl.helper.init" ||
+         action.id == "org.corectrl.helperkiller.init") &&
+        subject.local == true &&
+        subject.active == true &&
+        subject.isInGroup("wheel")) {
+            return polkit.Result.YES;
+    }
+});
+EOF'
+
+systemctl --user stop gamemoded.service
+
+## Changing default zsh path config
+echo "ZDOTDIR=$HOME/.config/zsh" | sudo tee /etc/zsh/zshenv
+
 
 echo -e"\n\nEverything is done!"

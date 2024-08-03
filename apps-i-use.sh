@@ -6,7 +6,7 @@ fi
 
 PACKAGES=(
   file-roller
-  eog
+  imv
   vlc
   blueberry
   gnome-calculator
@@ -19,36 +19,25 @@ PACKAGES=(
   ranger
   python-pillow
   neofetch
-  rofi
   gcolor3
   ffmpegthumbnailer
+  cronie
   imagemagick
-  virtualbox-host-modules-arch
-  virtualbox
   gdu
+  fzf
   yt-dlp
+  mangohud
+  lib32-mangohud
+  ttf-jetbrains-mono-nerd
 )
 
 AUR_PACKAGES=(
   google-chrome
-  pfetch
-  rxfetch
-  timeshift
+  brave-bin
   visual-studio-code-bin
-  lib32-mangohud-git
-  mangohud-common-git
   spotify
-  nerd-fonts-fira-code
-  nerd-fonts-jetbrains-mono
   ttf-twemoji
-  ttf-ms-fonts
-  mugshot
 )
-FLATPAKS=(
-  org.gimp.GIMP
-  org.kde.kdenlive
-)
-
 
 
 ## Arch
@@ -68,9 +57,6 @@ paru -S --needed --noconfirm ${AUR_PACKAGES[@]}
 
 ## Flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-echo -e "\n\033[1;36mFlatpak Packages:\033[0m"
-flatpak install -y ${FLATPAKS[@]}
-
 
 ## Must enable cronie.service for timeshift to work
 sudo systemctl enable cronie.service
@@ -83,35 +69,3 @@ sudo fc-cache -f
 cp /usr/share/applications/steam*.desktop $HOME/.local/share/applications/
 sed -i "/^X-KDE-RunOnDiscreteGpu=.*/a NoDisplay=true" $HOME/.local/share/applications/steam.desktop
 sed -i "s/Steam (Native)/Steam/" $HOME/.local/share/applications/steam-native.desktop
-
-
-## PhotoGIMP
-if ( flatpak list | grep -q org.gimp.GIMP ) && [[ ! -f ~/.local/share/applications/org.gimp.GIMP.desktop ]]; then
-  cd ~/Downloads && wget https://github.com/Diolinux/PhotoGIMP/releases/download/1.0/PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
-  unzip PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
-
-  cd 'PhotoGIMP by Diolinux v2020 for Flatpak/'
-  
-  dirs_to_move=(
-    .var
-    .icons
-    .local/share/applications
-  )
-  for path in ${dirs_to_move[@]}; do
-    if [[ ! -d ~/$path ]]; then
-      mkdir -p ~/$path
-      mv $path/* ~/$path
-    else
-      mv $path/* ~/$path
-    fi
-  done
-
-  # This is because rofi doesn't show the PhotoGIMP icon in ~/.icons,
-  # but can show the icon that Papirus have.
-  if ( find /usr/share/icons -name "photogimp*" >/dev/null ); then
-    sed -i "s/.png//g" ~/.local/share/applications/org.gimp.GIMP.desktop
-  fi
-
-  cd .. && rm -rf "PhotoGIMP by Diolinux v2020 for Flatpak" && rm PhotoGIMP.by.Diolinux.v2020.for.Flatpak.zip
-  echo -e "\033[1;31mThe GIMP icon will change to PhotoGIMP after you restart.\033[0m"
-fi
