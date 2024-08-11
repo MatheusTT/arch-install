@@ -95,8 +95,8 @@ if ( ! grep -q ".pub" <<< $(ls ~/.ssh 2>/dev/null)); then
 fi
 
 ## Creating a swap file
-mkswap -U clear --size 4G --file /swapfile
-swapon /swapfile
+sudo mkswap -U clear --size 4G --file /swapfile
+sudo swapon /swapfile
 sudo su -c 'cat << EOF >> /etc/fstab
 
 # /swapfile
